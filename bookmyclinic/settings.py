@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-t&qf4r$gev1zg50r0o%5e2gfj0f+7kfih-3jp20!p9^y)$1u6p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "bookmyclinic-2.onrender.com"]
 
 
 # Application definition
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'bookmyclinic.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bookmyclinic',       # اسم قاعدة البيانات اللي أنشأتها
-        'USER': 'clinic_user',        # اسم المستخدم
-        'PASSWORD': 'ClinicPass123!', # الباسورد اللي اخترته
-        'HOST': 'localhost',          # لأنه محلي
-        'PORT': '3306',               # بورت MySQL الافتراضي
+        'NAME': 'bookmyclinic',       
+        'USER': 'clinic_user',        
+        'PASSWORD': 'ClinicPass123!', 
+        'HOST': 'localhost',          
+        'PORT': '3306',               
     }
 }
 
