@@ -58,7 +58,7 @@ def register_doctor(request):
             specialty=specialty,
             clinic_location=clinic_location,
             consultation_fee=fee,
-            is_approved=False,
+            is_approved=True,
             certificate=certificate,
             id_card=id_card,
         )
