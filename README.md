@@ -44,7 +44,7 @@ python manage.py createsuperuser
 python manage.py runserver
 
 ---
-
+ 
 ## 📸 Screenshots
 
 ### 🔑 Admin Login Page
