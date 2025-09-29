@@ -9,7 +9,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("appointments/", include("appointments.urls")),
     path("reviews/", include("reviews.urls")),
-    path("", lambda request: redirect("login")), 
+    path("", lambda request: redirect("accounts:login")),
 ]
 
 if settings.DEBUG:
