@@ -1,10 +1,21 @@
-from django.contrib.auth import get_user_model
+from django.db import migrations
 
-def run():
-    User = get_user_model()
-    if not User.objects.filter(username="mustafa").exists():
+def create_admin(apps, schema_editor):
+    User = apps.get_model("accounts", "User")
+    if not User.objects.filter(email="mustafa@example.com").exists():
         User.objects.create_superuser(
-            username="mustafa",
             email="mustafa@example.com",
-            password="12345"
+            full_name="Mustafa",
+            password="12345",
+            role="admin"
         )
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ("accounts", "0001_initial"),
+    ]
+
+    operations = [
+        migrations.RunPython(create_admin),
+    ]
