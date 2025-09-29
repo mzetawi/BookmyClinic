@@ -47,6 +47,6 @@ class DoctorProfileAdmin(admin.ModelAdmin):
     id_card_preview.short_description = "ID Card"
     
     def approve_doctors(self, request, queryset):
-        updated = queryset.update(is_approved=True)
+        updated = queryset.update(is_approved=False)
         self.message_user(request, f"{updated} doctor(s) approved successfully.")
     approve_doctors.short_description = "Approve selected doctors"
