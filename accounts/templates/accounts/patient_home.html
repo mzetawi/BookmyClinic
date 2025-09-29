@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary">
+  <div class="container-fluid d-flex justify-content-between">
+    <span class="navbar-brand">BookMyClinic</span>
+    <div>
+      <a href="{% url 'appointments:my' %}" class="btn btn-light btn-sm">My Appointments</a>
+      <a href="{% url 'accounts:logout' %}" class="btn btn-danger btn-sm">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+
+  {% if messages %}
+    <div class="mb-3">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <h4 class="mb-3">Search Doctors</h4>
+  <form id="searchForm" class="mb-4">
+    <input type="text" name="name" placeholder="Doctor Name" class="form-control mb-2">
+
+    <select name="location" class="form-select mb-2">
+      <option value="">-- Select City --</option>
+      <option>Ramallah</option>
+      <option>Nablus</option>
+      <option>Hebron</option>
+      <option>Jenin</option>
+      <option>Tulkarm</option>
+      <option>Jerusalem</option>
+      <option>Gaza</option>
+    </select>
+
+    <select name="specialty" class="form-select mb-2">
+      <option value="">-- Select Specialty --</option>
+      <option value="Cardiology">Cardiology</option>
+      <option value="Dermatology">Dermatology</option>
+      <option value="Pediatrics">Pediatrics</option>
+      <option value="Neurology">Neurology</option>
+      <option value="General">General Medicine</option>
+      <option value="Dentistry">Dentistry</option>
+      <option value="Orthopedics">Orthopedics</option>
+      <option value="Psychiatry">Psychiatry</option>
+      <option value="ENT">Ear, Nose & Throat</option>
+      <option value="Ophthalmology">Ophthalmology</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary w-100">Search</button>
+  </form>
+
+  <h4>Available Doctors</h4>
+  <div id="results">
+    {% for doctor in doctors %}
+      <div class="card p-3 mb-3 shadow-sm">
+        <h5 class="mb-1">Dr. {{ doctor.user.full_name }}</h5>
+        <p class="mb-1"><b>Specialty:</b> {{ doctor.specialty }}</p>
+        <p class="mb-1"><b>Location:</b> {{ doctor.clinic_location }}</p>
+        <p class="mb-2"><b>Fee:</b> ${{ doctor.consultation_fee }}</p>
+        <div>
+          <a href="{% url 'appointments:book' doctor.id %}" class="btn btn-success btn-sm">Book</a>
+          <a href="{% url 'accounts:doctor_details' doctor.id %}" class="btn btn-info btn-sm">Details</a>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted">No doctors found.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+document.getElementById("searchForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const params = new URLSearchParams(formData);
+
+  fetch("{% url 'accounts:search_doctors' %}?" + params.toString(), {
+    headers: { "X-Requested-With": "XMLHttpRequest" }
+  })
+    .then(res => res.json())
+    .then(data => {
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+      if (!data.doctors || data.doctors.length === 0) {
+        resultsDiv.innerHTML = "<p class='text-muted'>No doctors found.</p>";
+        return;
+      }
+      data.doctors.forEach(doc => {
+        resultsDiv.innerHTML += `
+          <div class="card p-3 mb-3 shadow-sm">
+            <h5 class="mb-1">Dr. ${doc.name}</h5>
+            <p class="mb-1"><b>Specialty:</b> ${doc.specialty}</p>
+            <p class="mb-1"><b>Location:</b> ${doc.location}</p>
+            <p class="mb-2"><b>Fee:</b> $${doc.fee}</p>
+            <div>
+              <a href="/appointments/book/${doc.id}/" class="btn btn-success btn-sm">Book</a>
+              <a href="/accounts/doctor/${doc.id}/" class="btn btn-info btn-sm">Details</a>
+            </div>
+          </div>`;
+      });
+    })
+    .catch(err => {
+      document.getElementById("results").innerHTML =
+        "<p class='text-danger'>⚠ Error loading doctors.</p>";
+    });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

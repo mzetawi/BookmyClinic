@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center" style="min-height:100vh;">
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card shadow-lg p-5 border-0 rounded-4">
+        <h3 class="text-center text-success fw-bold mb-4">👨‍⚕️ Doctor Registration</h3>
+
+        {% if messages %}
+          <div class="mb-3">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <div class="form-floating mb-3">
+            <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
+            <label>Full Name</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="email" name="email" class="form-control" placeholder="Email" required>
+            <label>Email</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <label>Password</label>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Specialty</label>
+            <select name="specialty" class="form-select" required>
+              <option value="">-- Select Specialty --</option>
+              <option value="Cardiology">Cardiology (Heart)</option>
+              <option value="Dermatology">Dermatology (Skin)</option>
+              <option value="Pediatrics">Pediatrics (Children)</option>
+              <option value="Neurology">Neurology</option>
+              <option value="General">General Medicine</option>
+              <option value="Orthopedics">Orthopedics (Bones)</option>
+              <option value="ENT">ENT (Ear, Nose, Throat)</option>
+              <option value="Ophthalmology">Ophthalmology (Eyes)</option>
+              <option value="Psychiatry">Psychiatry</option>
+              <option value="Gynecology">Gynecology</option>
+              <option value="Dentistry">Dentistry</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Clinic Location</label>
+            <select name="clinic_location" class="form-select" required>
+              <option value="">-- Select Location --</option>
+              <option value="Ramallah">Ramallah</option>
+              <option value="Nablus">Nablus</option>
+              <option value="Hebron">Hebron</option>
+              <option value="Jenin">Jenin</option>
+              <option value="Tulkarm">Tulkarm</option>
+              <option value="Jerusalem">Jerusalem</option>
+              <option value="Gaza">Gaza</option>
+            </select>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="number" step="0.01" min="1" name="consultation_fee" class="form-control" placeholder="Consultation Fee" required>
+            <label>Consultation Fee ($)</label>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Upload Certificate</label>
+            <input type="file" name="certificate" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Upload ID Card</label>
+            <input type="file" name="id_card" class="form-control" accept=".jpg,.jpeg,.png">
+          </div>
+
+          <button type="submit" class="btn btn-success w-100 py-2">
+            ✅ Register as Doctor
+          </button>
+        </form>
+        
+        <p class="text-center mt-3 mb-0">
+          Already registered? 
+          <a href="{% url 'accounts:login' %}" class="fw-bold text-decoration-none">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
