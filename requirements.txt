@@ -6,3 +6,4 @@ python-dotenv
 sqlparse==0.5.3
 asgiref==3.9.1
 pillow==11.3.0
+PyMySQL==1.1.0
