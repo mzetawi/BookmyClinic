@@ -76,7 +76,7 @@ class DoctorProfile(models.Model):
     specialty = models.CharField(max_length=100, choices=SPECIALTY_CHOICES)
     clinic_location = models.CharField(max_length=200, choices=LOCATION_CHOICES)
     consultation_fee = models.DecimalField(max_digits=8, decimal_places=2)
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=True)
 
     certificate = models.FileField(upload_to="certificates/", null=True, blank=True)
     id_card = models.ImageField(upload_to="id_cards/", null=True, blank=True)
