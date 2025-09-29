@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-t&qf4r$gev1zg50r0o%5e2gfj0f+7kfih-3jp20!p9^y)$1u6p
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "bookmyclinic-8onrender.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "bookmyclinic-9onrender.com"]
 
 INSTALLED_APPS = [
     'accounts',
